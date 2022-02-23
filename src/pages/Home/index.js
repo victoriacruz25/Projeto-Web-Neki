@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom'
 import api from "../../Service/api";
 
 
+
 function Home() {
 
     const [popupCriacaoSkillVisivel, setPopupCriacaoSkillVisivel] = useState(false)
@@ -23,7 +24,8 @@ function Home() {
     const navigation = useNavigate()
     const [skills, setSkills] = useState([])
     const [minhasSkills, setMinhasSkills] = useState([])
-
+    const [skillSelecionar, setSkillSelecionar] = useState(0)
+    
 
 
 
@@ -40,7 +42,7 @@ function Home() {
         <>
 
             <CadastrarSkill skill={skills} setSkills={setSkills} popIsVisible={popupCriacaoSkillVisivel} setPopupIsVisible={setPopupCriacaoSkillVisivel} />
-            <JoinSkill popIsVisible={popupJoinSkillVisivel} setPopupIsVisible={setPopupJoinSkillVisivel} />
+            <JoinSkill  skill={minhasSkills} setSkills={setMinhasSkills} id={skillSelecionar} popIsVisible={popupJoinSkillVisivel} setPopupIsVisible={setPopupJoinSkillVisivel} />
             <Container>
                 <Header>
                     <h1>Lista de skills</h1>
@@ -70,7 +72,12 @@ function Home() {
                             ? (
                                 <>
                                     {skills.map((skill) => {
-                                        return <SkillCard key={skill.id} skill={skill} onClick={() => { setPopupJoinSkillVisivel(true) }} /> //laço de repetiçã(pra cada skill entra um card) 
+                                        return <SkillCard key={skill.id} id={skill.id} skill={skill} 
+                                        onClick={() => { 
+                                            setPopupJoinSkillVisivel(true)
+                                            setSkillSelecionar(skill.id)
+                                        
+                                        }} /> //laço de repetiçã(pra cada skill entra um card) 
                                     })}
                                 </>
                             )

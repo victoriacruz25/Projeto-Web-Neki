@@ -6,9 +6,50 @@ import {
     Content,
     Popup
 } from './styles';
+import { useNavigate } from 'react-router-dom'
+import api from "../../Service/api";
+import Swal from 'sweetalert2'
+import {useState} from 'react'
+
+function CadastrarSkill({ popIsVisible, setPopupIsVisible, id, skill,setSkills}) {
+
+    const [nivel, setNivel] = useState([])
+    const user = JSON.parse(localStorage.getItem("user")) || JSON.parse(sessionStorage.getItem("user"))
+
+    async function cadastrarHab() {
+
+        if(!nivel){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Dados incorretos!',
+              })
+              return
+        }
+
+        try {
+           let hab = await api.post("/api/cadastrarHabilidadeUsuario",
+            {
+                usuario:user.id,
+                habilidade:id,
+                nivel,
+                dataCriacao:"2022-02-22"
+            })
+           // navigation("/")
+           setSkills([...skill,hab.data])
+           setPopupIsVisible(false)
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Dados incorretos!',
+              })
+        }
+    }
+
+    
 
 
-function CadastrarSkill({ popIsVisible, setPopupIsVisible }) {
     return (
         <>
             <Popup popIsVisible={popIsVisible}>
@@ -28,8 +69,8 @@ function CadastrarSkill({ popIsVisible, setPopupIsVisible }) {
                     </Header>
 
                     <Content>
-                        <input placeholder='Digite o seu nível de conhecimento' />
-                        <button>Join!</button>
+                        <input type={"number"} placeholder='Digite o seu nível de conhecimento' />
+                        <button onClick={cadastrarHab}>Join!</button>
                     </Content>
 
                 </Container>
