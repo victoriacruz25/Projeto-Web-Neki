@@ -9,6 +9,18 @@ margin-top: 50px;
 border-radius: 5px;
 padding: 10px;
 cursor: pointer;
+
+& > button {
+    width: 100%;
+    height: 5%;
+    background-color:#34B4B5;
+    border-radius:5px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
 `
 export const Imagem = styled.div`
     width: 100%;
@@ -45,7 +57,7 @@ export const Nome = styled.div`
 `
 export const Descricao = styled.div`
     width: 100%;
-    height: 50%;
+    height: 45%;
     display: flex;
     flex-direction: column;
     border-radius: 5px;
@@ -62,3 +74,4 @@ export const Descricao = styled.div`
     
 
 `
+

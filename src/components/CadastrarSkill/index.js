@@ -36,7 +36,7 @@ function CadastrarSkill({popIsVisible, setPopupIsVisible,skill,setSkills }) {
                 nome,
                 versao,
                 descricao,
-                imagem_url:imagem
+                imagem
             })
             setSkills([...skill,habSkill.data]) //definindo o array com as antigas+novas
             setPopupIsVisible(false)

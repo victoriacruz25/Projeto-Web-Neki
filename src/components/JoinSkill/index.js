@@ -11,13 +11,13 @@ import api from "../../Service/api";
 import Swal from 'sweetalert2'
 import {useState} from 'react'
 
-function CadastrarSkill({ popIsVisible, setPopupIsVisible, id, skill,setSkills}) {
+function CadastrarSkill({ popIsVisible, setPopupIsVisible, id, skill,setSkills, joinSkill, setJoinSkill}) {
 
-    const [nivel, setNivel] = useState([])
+    const [nivel, setNivel] = useState(0)
     const user = JSON.parse(localStorage.getItem("user")) || JSON.parse(sessionStorage.getItem("user"))
 
     async function cadastrarHab() {
-
+        console.log(nivel.data)
         if(!nivel){
             Swal.fire({
                 icon: 'error',
@@ -32,18 +32,20 @@ function CadastrarSkill({ popIsVisible, setPopupIsVisible, id, skill,setSkills})
             {
                 usuario:user.id,
                 habilidade:id,
-                nivel,
-                dataCriacao:"2022-02-22"
+                nivel:Number(nivel),
             })
            // navigation("/")
-           setSkills([...skill,hab.data])
+           //setSkills([...skill,hab.data])
+           setJoinSkill(joinSkill+1)
            setPopupIsVisible(false)
+           
         } catch (error) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Dados incorretos!',
               })
+              console.log(error)
         }
     }
 
@@ -69,7 +71,7 @@ function CadastrarSkill({ popIsVisible, setPopupIsVisible, id, skill,setSkills})
                     </Header>
 
                     <Content>
-                        <input type={"number"} placeholder='Digite o seu nível de conhecimento' />
+                        <input type={"number"} placeholder='Digite o seu nível de conhecimento' valeu={nivel} onChange={(e) => setNivel(e.target.value)} />
                         <button onClick={cadastrarHab}>Join!</button>
                     </Content>
 
