@@ -42,6 +42,8 @@ function Cadastro () {
             })
             if(logado === true){
                 localStorage.setItem("user", JSON.stringify(user.data)) //transforma os dados do user em Json e armazena no localStorage 
+            }else{
+                sessionStorage.setItem("user", JSON.stringify(user.data)) 
             }
             navigation("/home")
         } catch (error) {

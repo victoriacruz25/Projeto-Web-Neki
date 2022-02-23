@@ -6,19 +6,19 @@ import {
 } from './styles'
 
 
-function SkillCard({onClick}) {
+function SkillCard({onClick,skill}) {
     return(
         <Card onClick={onClick}>
             <Imagem>
-                <img src={"https://static.atletis.com.br/assets/base/dc9/60c/46c/como-correr-corretamente.jpg"}/>
+                <img src={skill.imagem}/>
             </Imagem>
             <Nome>
-                <strong>Correr</strong>
-                <span>2.0</span>
+                <strong >{skill.nome}</strong>
+                <span>{skill.versao}</span>
             </Nome>
             <Descricao>
                 <strong>Descrição</strong>
-                <p>imprimir grande velocidade ao deslocamento do corpo, pelo contato rápido dos pés ou das patas com o solo.</p>
+                <p>{skill.descricao}</p>
             </Descricao>
         </Card>
     )

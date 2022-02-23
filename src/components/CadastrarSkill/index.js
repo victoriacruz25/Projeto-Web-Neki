@@ -6,9 +6,50 @@ import {
     Content,
     Popup
 } from './styles';
+import api from '../../Service/api';
+import Swal from 'sweetalert2'
+import {useState} from 'react'
 
 
-function CadastrarSkill({popIsVisible, setPopupIsVisible }) {
+function CadastrarSkill({popIsVisible, setPopupIsVisible,skill,setSkills }) {
+
+    const [nome,setNome] = useState("")
+    const [versao,setVersao] = useState("")
+    const [descricao,setDescricao] = useState("")
+    const [imagem,setImagem] = useState("")
+
+
+    async function cadastrarHabilidade() {
+
+        if(!nome || !descricao ){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Faltando dados!',
+              })
+              return
+        }
+
+        try {
+           let habSkill = await api.post("/api/cadastrarHabilidade",
+            {
+                nome,
+                versao,
+                descricao,
+                imagem_url:imagem
+            })
+            setSkills([...skill,habSkill.data]) //definindo o array com as antigas+novas
+            setPopupIsVisible(false)
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Erro inesperado ocorreu!',
+              })
+        }
+    }
+
+
     return (
         <Popup popIsVisible={popIsVisible}>
             <Backdrop onClick={() => setPopupIsVisible(false)} />
@@ -28,12 +69,12 @@ function CadastrarSkill({popIsVisible, setPopupIsVisible }) {
 
                 <Content>
                     <div>
-                        <input placeholder='Digite o nome da skill'/>
-                        <input placeholder='Digite a versão'/>
+                        <input placeholder='Digite o nome da skill' value={nome} onChange={(e) => {setNome(e.target.value)}}/>
+                        <input placeholder='Digite a versão' value={versao} onChange={(e) => {setVersao(e.target.value)}}/>
                     </div>
-                        <textarea placeholder='Fale mais sobre a skill'/>
-                        <input placeholder='Digite a URL da imagem'/>
-                        <button>Cadastrar</button>
+                        <textarea placeholder='Fale mais sobre a skill' value={descricao} onChange={(e) => {setDescricao(e.target.value)}}/>
+                        <input placeholder='Digite a URL da imagem' value={imagem} onChange={(e) => {setImagem(e.target.value)}}/>
+                        <button onClick={cadastrarHabilidade}>Cadastrar</button>
                 </Content>
 
             </Container>
